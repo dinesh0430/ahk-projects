@@ -16,7 +16,7 @@
 
     ;Esc                 - CapsLock only
 
-    ;CapsLock            - q
+    ;CapsLock            - LShift & CapsLock
 
 
 
