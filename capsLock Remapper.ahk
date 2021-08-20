@@ -1,4 +1,4 @@
-﻿
+
 /*  Autohotkey Capslock Remapping Script
     ; - Deactivates capslock for normal (accidental) use.
     ; - Access the following functions when pressing Capslock:
@@ -16,7 +16,7 @@
 
     ;Esc                 - CapsLock only
 
-    ;CapsLock            - LShift & CapsLock
+    ;CapsLock            - CapsLock and LShift
 
 
 
@@ -199,7 +199,7 @@ Capslock & n::SendInput {Blind}{BackSpace Down}
 Capslock & n up::SendInput {Blind}{BackSpace Up}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Toggle CapsLock
-; CapsLock + q :: Toggles CapsLock
+; CapsLock + LShift :: Toggles CapsLock
 
 LShift & Capslock::
 If GetKeyState("CapsLock", "T") = 1
@@ -248,6 +248,31 @@ CapsLock & w::SendInput {Ctrl Down}{Shift Down}{Left}{Ctrl Up}{Shift Up}{BackSpa
 
 Capslock & s::Send,!{Left}
 Capslock & d::Send,!{Right}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Volume Control
+; Here Volume_up 4 means 4*2=8, 8 steps of volume change as windows changes volume in increments of 2
+
+CapsLock & WheelUp::
+if getkeystate("Alt", "P")
+Send {Volume_Up 4}
+else
+send {Volume_Up}
+return
+
+CapsLock & WheelDown::
+if getkeystate("Alt", "P")
+Send {Volume_Down 4}
+else
+send {Volume_Down}
+return
+
+CapsLock & MButton::Send {Volume_Mute}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Red Gear Thor mouse's Turbo Fire button (or) Green colored button beside left click button
+
+;SC122::
+;MsgBox,  %A_ThisHotkey% was pressed.
+;return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Home, End, PageUp, PageDown
 ; CapsLock + i/o
