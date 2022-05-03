@@ -16,18 +16,15 @@
 
     ;Esc                 - CapsLock only
 
-    ;CapsLock            - CapsLock and LShift
+    ;CapsLock            - CapsLock and q
 
 
 
 
     ;Text Editing :-
 
-    ; Select All      - a
-    ; Copy            - c
-    ; Cut             - x
-    ; Paste           - v
     ; Delete to home  - u
+    ; Delete 		  - b
     ; Backspace       - n
 
 
@@ -40,7 +37,10 @@
 #Persistent
 SetCapsLockState, AlwaysOff
 
-AppsKey & x::
+;;;;;;;;;;;;;;;;;;;;;;; >>> OPEN Favourite  Windows  Apps with AppsKey <<< 
+
+
+AppsKey & x::							;; XYPlorer
     if !WinExist("ahk_exe XYplorer.exe")
     {
         run, C:\Program Files (x86)\XYplorer\XYplorer.exe
@@ -51,7 +51,7 @@ AppsKey & x::
     }
 return
 
-AppsKey & c::
+AppsKey & c::							;; Chrome or chromium 
     if !WinExist("ahk_exe chrome.exe")
     {
         run, C:\Users\dines\AppData\Local\Chromium\Application\chrome.exe
@@ -62,7 +62,7 @@ AppsKey & c::
     }
 return
 
-AppsKey & f::
+AppsKey & f::							;; Foobar2000 
     if !WinExist("ahk_exe foobar2000.exe")
     {
         run, D:\Foobar Setups\1 - FINAL SETUP\foobar2000.exe
@@ -70,74 +70,27 @@ AppsKey & f::
     else
     {
         winactivate ahk_exe foobar2000.exe
-    }
-return
-
-
-; ****************************************************************************************************************************************** ;
-
-/*  Behaviour of CapsLock in GVIM
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    ;If window title has GVIM
-    ; Specialized hotkeys for GVIM
-
-    ;If present in GVIM then CapsLock works as dual switch:
-    ;Single Tap: Escape
-    ;Hold and press other keys: Ctrl + {other keys}
-
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- */
-
-; ****************************************************************************************************************************************** ;
-
-
-;SetTitleMatchMode, 2
-#IfWinActive ahk_exe nvim-qt.exe
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Escape Key
-; Capslock only, Send Escape
-; Hold and press other keys to send out <CTRL> + {other keys}
-
-#InstallKeybdHook
-SetCapsLockState, alwaysoff
-Capslock::
-Send {LControl Down}
-KeyWait, CapsLock
-Send {LControl Up}
-if ( A_PriorKey = "CapsLock" )
-{
-    Send {Esc}
 }
 return
 
 
-; ****************************************************************************************************************************************** ;
-
-; If windows is ------------------->  mintty or Git bash
-#IfWinActive ahk_class mintty
-
-Capslock & u::Send, ^u
-Capslock::Send {Ctrl down}{Ctrl up}
-
-; If windows is Windows Terminal
-#IfWinActive ahk_exe WindowsTerminal.exe
-
-Capslock & u::Send, ^u
-Capslock & w::Send, ^w
-Capslock & Space::Send, ^{Space}
 
 ; If windows is ------------------->  Foobar2000
 #IfWinActive ahk_exe foobar2000.exe
 
 Capslock & f::
-ControlSetText,ATL:EDIT1,* HAS `
-ControlClick,ATL:EDIT1
+ControlSetText,ATL:EDIT1,* HAS `		;; Facets component filter to compare with all fields
+ControlClick,ATL:EDIT1				;; Focus the filter textbox to write further query
 return
 
-:*?:t;:: AND title HAS `
-:*?:a;:: AND artist HAS `
-:*?:al;:: AND album HAS `
+:*?:t;:: AND title HAS `				;; Facets component filter to include title 
+:*?:a;:: AND artist HAS `			;; Facets component filter to include artist
+:*?:al;:: AND album HAS `			;; Facets component filter to include album
+
+#IfWinActive	; Closes the previous #IfWinActive usage
+
+
+
 
 ; If windows is ------------------->  sumatra pdf viewer
 #IfWinActive ahk_exe SumatraPDF.exe
@@ -147,50 +100,39 @@ Capslock & e::Send, +k
 d::Send,j
 e::Send,k
 
+#IfWinActive	; Closes the previous #IfWinActive usage
+
+
+
+
 ; If windows is ------------------->  XYPlorer
 #IfWinActive ahk_exe XYplorer.exe
 
-Capslock & e::Send, ^+%A_Tab%
-Capslock & r::Send, ^%A_Tab%
+Capslock & e::Send, ^+%A_Tab%		; goes to the tab on the left side 
+Capslock & r::Send, ^%A_Tab%		; goes to the tab on the right side
 
-; ****************************************************************************************************************************************** ;
-
-/*  Behaviour of CapsLock in places other than GVIM
-
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    ; See top comment in file at the start
-
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
- */
+#IfWinActive	; Closes the previous #IfWinActive usage
 
 
-; ****************************************************************************************************************************************** ;
 
-#IfWinNotActive ahk_exe nvim-qt.exe
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Navigation Keys
 ; Capslock + h/j/k/l (left, down, up, right)
 
-Capslock & h::Send {Blind}{Left Down}
-Capslock & h up::Send {Blind}{Left Up}
+Capslock & h::Send {Left}
 
-Capslock & j::Send {Blind}{Down Down}
-Capslock & j up::Send {Blind}{Down Up}
+Capslock & j::Send {Down}
 
-Capslock & k::Send {Blind}{Up Down}
-Capslock & k up::Send {Blind}{Up Up}
+Capslock & k::Send {Up}
 
-Capslock & l::Send {Blind}{Right Down}
-Capslock & l up::Send {Blind}{Right Up}
+Capslock & l::Send {Right}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Backspace
 ; Capslock + n (backspace)
 
-Capslock & n::SendInput {Blind}{BackSpace Down}
-Capslock & n up::SendInput {Blind}{BackSpace Up}
+Capslock & n::SendInput {Backspace}
 
 ; Capslock + b (Delete)
 Capslock & b::Send {Delete}
@@ -198,11 +140,11 @@ Capslock & b::Send {Delete}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Toggle CapsLock
 ; CapsLock + LShift :: Toggles CapsLock
 
-LShift & Capslock::
+Capslock & q::
 If GetKeyState("CapsLock", "T") = 1
-SetCapsLockState, AlwaysOff
+	SetCapsLockState, AlwaysOff
 Else
-SetCapsLockState, AlwaysOn
+	SetCapsLockState, AlwaysOn
 Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Escape Key
@@ -210,20 +152,6 @@ Return
 
 CapsLock::Send, {ESC}
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Select All, Cut , Copy and Paste
-; Capslock + a/x/c/v
-
-Capslock & a::SendInput {Ctrl Down}{a Down}
-Capslock & a up::SendInput {Ctrl Up}{a Up}
-
-Capslock & x::SendInput {Ctrl Down}{x Down}
-Capslock & x up::SendInput {Ctrl Up}{x Up}
-
-Capslock & c::SendInput {Ctrl Down}{c Down}
-Capslock & c up::SendInput {Ctrl Up}{c Up}
-
-Capslock & v::SendInput {Ctrl Down}{v Down}
-Capslock & v up::SendInput {Ctrl Up}{v Up}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Enter Key
 ; Capslock + m
@@ -250,64 +178,112 @@ Capslock & d::Send,!{Right}
 ; Here Volume_up 4 means 4*2=8, 8 steps of volume change as windows changes volume in increments of 2
 
 CapsLock & WheelUp::
-if getkeystate("Alt", "P")
-Send {Volume_Up 4}
+if getkeystate("Control", "P")
+	Send {Left}				; Can be used to go backward in video with scroll
+else if getkeystate("Alt", "P")
+	Send {Volume_Up 5}
 else
-send {Volume_Up}
+	send {Volume_Up}
 return
 
 CapsLock & WheelDown::
-if getkeystate("Alt", "P")
-Send {Volume_Down 4}
+if getkeystate("Control", "P")
+	Send {Right}				; Can be used to go forward in video with scroll
+else if getkeystate("Alt", "P")
+	Send {Volume_Down 5}
 else
-send {Volume_Down}
+	send {Volume_Down}
 return
 
 CapsLock & MButton::Send {Volume_Mute}
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Red Gear Thor mouse's Turbo Fire button (or) Green colored button beside left click button
-;SC122::
-;MsgBox,  %A_ThisHotkey% was pressed.
-;return
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Brightness Controls
-;
 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Home, End, PageUp, PageDown
 ; CapsLock + i/o
 
+
 CapsLock & i::
 If GetKeyState("Shift", "P")
-Send, ^{Home}
+	Send, {PgUP}
 Else if GetKeyState("Alt", "P")
-Send, {PgUP}
+	Send, ^{Home}
 Else
-Send, {Home}
+	Send, {Home}
 return
 
 CapsLock & o::
 If GetKeyState("Shift", "P")
-Send, ^{End}
+	Send {PgDn}
 Else if GetKeyState("Alt", "P")
-Send, {PgDn}
+	Send, ^{End}
 Else
-Send, {End}
+	Send, {End}
 return
 
+
+
+;^0::#space
+
+
+
+
+
+
 ; ********************************************************************* ;
 
-/*  Open favourite applications with help of AppsKey
 
+;;;;;;;;;;;;;;;;;;;;;; Red Gear Thor mouse's Turbo Fire button (or) Green colored button beside left click button
+;SC122::
+;MsgBox,  %A_ThisHotkey% was pressed.
+;return
+
+
+
+/*  UNUSED CODE
+	
+	
+    ;;; For navigation
+	
+	Capslock & h::Send {Blind}{Left DownTemp}
+	Capslock & h up::Send {Blind}{Left Up}
+	
+    ;;; Remove all text till home
+	
+	Capslock & u up::SendInput {Ctrl Up}{a Up}{BackSpace}
+	
+    ;;; [[[[[[[DEPRECATED]]]]]]]  CapsLock & h with Alt as modifier
+	
+	Capslock & h::
+	GetKeyState, state, Alt
+	if state = D
+		Send, {Left}
+	else {
+		Send, {BackSpace}
+	}
+	Return
+	
+    ;;; CapsLock & h with Alt as modifier -- 2
+	
+	CapsLock & h::
+	If GetKeyState("Alt", "P")
+		Send, {Left}
+	Else
+		Send, {Right}
+	return
+		
+	
+; ********************************************************************* ;
+	
+	;  Open favourite applications with help of AppsKey
+	
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+	
     ; AppsKey + x :: XYplorer
+	
 
- */
 
 ; ********************************************************************* ;
-
 
 
 
@@ -364,44 +340,97 @@ return
 ;        run, C:\Users\madhu\Downloads\gVim.lnk
 ;    }
 
-^0::#space
 
+; ****************************************************************************************************************************************** ;
+	
+  ;Behaviour of CapsLock in GVIM
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+    ;If window title has GVIM
+    ; Specialized hotkeys for GVIM
+	
+    ;If present in GVIM then CapsLock works as dual switch:
+    ;Single Tap: Escape
+    ;Hold and press other keys: Ctrl + {other keys}
+	
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	
+; ****************************************************************************************************************************************** ;
+	
+	
+;SetTitleMatchMode, 2
+	#IfWinActive ahk_exe nvim-qt.exe
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Escape Key
+ ;Capslock only, Send Escape
+ ;Hold and press other keys to send out <CTRL> + {other keys}
+	
+	#InstallKeybdHook
+	SetCapsLockState, alwaysoff
+	Capslock::
+	Send {LControl Down}
+	KeyWait, CapsLock
+	Send {LControl Up}
+	if ( A_PriorKey = "CapsLock" )
+	{
+		Send {Esc}
+	}
+	return
+	
+	
+; ****************************************************************************************************************************************** ;
+	
+; If windows is ------------------->  mintty or Git bash
+	#IfWinActive ahk_class mintty
+	
+	Capslock & u::Send, ^u
+	Capslock::Send {Ctrl down}{Ctrl up}
+	
+; If windows is Windows Terminal
+	#IfWinActive ahk_exe WindowsTerminal.exe
+	
+	Capslock & u::Send, ^u
+	Capslock & w::Send, ^w
+	Capslock & Space::Send, ^{Space}
+	
 
-; ********************************************************************* ;
+	
+	
+	Capslock & h::Send {Blind}{Left Down}
+	Capslock & h up::Send {Blind}{Left Up}
+	
+	Capslock & j::Send {Blind}{Down Down}
+	Capslock & j up::Send {Blind}{Down Up}
+	
+	Capslock & k::Send {Blind}{Up Down}
+	Capslock & k up::Send {Blind}{Up Up}
+	
+	Capslock & l::Send {Blind}{Right Down}
+	Capslock & l up::Send {Blind}{Right Up}
+	
+	
 
-/*  UNUSED CODE
+	
+	CapsLock & i::
+	If GetKeyState("Ctrl", "P")
+		Send, ^{Home}
+	Else if GetKeyState("Alt", "P")
+		Send, {PgUP}
+	Else
+		Send, {Home}
+	return
+	
+	CapsLock & o::
+	If GetKeyState("Ctrl", "P")			; 
+		Send, ^{End}
+	Else if GetKeyState("Alt", "P")
+		Send, {PgDn}
+	Else
+		Send, {End}
+	return
+	
+*/
 
-
-    ;;; For navigation
-
-    Capslock & h::Send {Blind}{Left DownTemp}
-    Capslock & h up::Send {Blind}{Left Up}
-
-    ;;; Remove all text till home
-
-    Capslock & u up::SendInput {Ctrl Up}{a Up}{BackSpace}
-
-    ;;; [[[[[[[DEPRECATED]]]]]]]  CapsLock & h with Alt as modifier
-
-    Capslock & h::
-    GetKeyState, state, Alt
-    if state = D
-    Send, {Left}
-    else {
-    Send, {BackSpace}
-    }
-    Return
-
-    ;;; CapsLock & h with Alt as modifier -- 2
-
-    CapsLock & h::
-    If GetKeyState("Alt", "P")
-    Send, {Left}
-    Else
-    Send, {Right}
-    return
-
-
- */
 
 ; ********************************************************************* ;
