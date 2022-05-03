@@ -54,7 +54,7 @@ return
 AppsKey & c::
     if !WinExist("ahk_exe chrome.exe")
     {
-        run, C:\Users\madhu\Downloads\Advanced_Chrome_Windows_v84.0.4115.0\Advanced Chrome\chrome.exe
+        run, C:\Users\dines\AppData\Local\Chromium\Application\chrome.exe
     }
     else
     {
@@ -62,22 +62,10 @@ AppsKey & c::
     }
 return
 
-AppsKey & v::
-    if !WinExist("ahk_class Qt5QWindowIcon")
-    {
-        run, C:\Users\madhu\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\nvim-qt.lnk
-    }
-    else
-    {
-        winactivate ahk_class Qt5QWindowIcon
-    }
-return
-
-
-AppsKey & z::
+AppsKey & f::
     if !WinExist("ahk_exe foobar2000.exe")
     {
-        run, D:\Software\foobar2000-hope\foobar2000.exe
+        run, D:\Foobar Setups\1 - FINAL SETUP\foobar2000.exe
     }
     else
     {
@@ -126,7 +114,7 @@ return
 
 ; ****************************************************************************************************************************************** ;
 
-; If windows is mintty or Git bash
+; If windows is ------------------->  mintty or Git bash
 #IfWinActive ahk_class mintty
 
 Capslock & u::Send, ^u
@@ -151,13 +139,19 @@ return
 :*?:a;:: AND artist HAS `
 :*?:al;:: AND album HAS `
 
-; If windows is sumatra pdf viewer
+; If windows is ------------------->  sumatra pdf viewer
 #IfWinActive ahk_exe SumatraPDF.exe
 
 Capslock & d::Send, +s
 Capslock & e::Send, +k
 d::Send,j
 e::Send,k
+
+; If windows is ------------------->  XYPlorer
+#IfWinActive ahk_exe XYplorer.exe
+
+Capslock & e::Send, ^+%A_Tab%
+Capslock & r::Send, ^%A_Tab%
 
 ; ****************************************************************************************************************************************** ;
 
@@ -197,6 +191,9 @@ Capslock & l up::Send {Blind}{Right Up}
 
 Capslock & n::SendInput {Blind}{BackSpace Down}
 Capslock & n up::SendInput {Blind}{BackSpace Up}
+
+; Capslock + b (Delete)
+Capslock & b::Send {Delete}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Toggle CapsLock
 ; CapsLock + LShift :: Toggles CapsLock
@@ -269,10 +266,14 @@ return
 CapsLock & MButton::Send {Volume_Mute}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Red Gear Thor mouse's Turbo Fire button (or) Green colored button beside left click button
-
 ;SC122::
 ;MsgBox,  %A_ThisHotkey% was pressed.
 ;return
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Brightness Controls
+;
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Home, End, PageUp, PageDown
 ; CapsLock + i/o
@@ -306,6 +307,9 @@ return
  */
 
 ; ********************************************************************* ;
+
+
+
 
 
 ;AppsKey & g::
