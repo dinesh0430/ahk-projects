@@ -121,13 +121,22 @@ Capslock & r::Send, ^%A_Tab%		; goes to the tab on the right side
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Navigation Keys
 ; Capslock + h/j/k/l (left, down, up, right)
 
-Capslock & h::Send {Left}
 
-Capslock & j::Send {Down}
 
-Capslock & k::Send {Up}
 
-Capslock & l::Send {Right}
+Capslock & h::Send {Blind}{Left Down}
+Capslock & h up::Send {Blind}{Left Up}
+
+Capslock & j::Send {Blind}{Down Down}
+Capslock & j up::Send {Blind}{Down Up}
+
+Capslock & k::Send {Blind}{Up Down}
+Capslock & k up::Send {Blind}{Up Up}
+
+Capslock & l::Send {Blind}{Right Down}
+Capslock & l up::Send {Blind}{Right Up}
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Backspace
 ; Capslock + n (backspace)
@@ -271,7 +280,7 @@ return
 	Else
 		Send, {Right}
 	return
-		
+	
 	
 ; ********************************************************************* ;
 	
@@ -281,13 +290,13 @@ return
 	
     ; AppsKey + x :: XYplorer
 	
-
-
+	
+	
 ; ********************************************************************* ;
-
-
-
-
+	
+	
+	
+	
 ;AppsKey & g::
 ;IfWinNotExist ahk_exe gvim.exe
 ;  Run, C:\Users\madhu\Downloads\gVim.lnk
@@ -305,8 +314,8 @@ return
 ;  run, D:\Advanced Chrome\Advanced Chrome\chrome.exe
 ;WinWait, ahk_exe chrome.exe
 ;  winactivate ahk_exe chrome.exe
-
-
+	
+	
 ;AppsKey & c::
 ;    if WinExist("ahk_exe chrome.exe")
 ;    {
@@ -339,8 +348,8 @@ return
 ;    {
 ;        run, C:\Users\madhu\Downloads\gVim.lnk
 ;    }
-
-
+	
+	
 ; ****************************************************************************************************************************************** ;
 	
   ;Behaviour of CapsLock in GVIM
@@ -394,7 +403,7 @@ return
 	Capslock & w::Send, ^w
 	Capslock & Space::Send, ^{Space}
 	
-
+	
 	
 	
 	Capslock & h::Send {Blind}{Left Down}
@@ -410,7 +419,7 @@ return
 	Capslock & l up::Send {Blind}{Right Up}
 	
 	
-
+	
 	
 	CapsLock & i::
 	If GetKeyState("Ctrl", "P")
@@ -430,6 +439,18 @@ return
 		Send, {End}
 	return
 	
+	
+	
+	Capslock & h::Send {Left}
+	
+	Capslock & j::Send {Down}
+	
+	Capslock & k::Send {Up}
+	
+	Capslock & l::Send {Right}
+
+
+
 */
 
 
